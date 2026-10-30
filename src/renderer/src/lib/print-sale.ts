@@ -1,45 +1,25 @@
-import type { SaleResult } from '@core/types'
+import type { SaleResult } from '../../../core/types'
 
 /**
- * Impresión tras emitir:
- * - Factura/Boleta con PDF Nubefact → solo ese PDF (nunca ticket local)
- * - Nota de venta → ticket HTML propio
+ * Imprime el comprobante:
+ * - CPE (01/03) SEE → ticket HTML local
+ * - NV → ticket HTML
+ * - Fallback: PDF autenticado de la API
  */
 export async function printSaleTicket(sale: SaleResult): Promise<void> {
   try {
-    const nubefactPdf =
-      sale.nubefactPdf?.trim() || sale.nubefactEnlace?.trim() || ''
-
-    // CPE (01/03): únicamente representación Nubefact
-    if (nubefactPdf && /^https?:\/\//i.test(nubefactPdf)) {
-      const result = await window.mebsy.invoices.printPdf(nubefactPdf)
-      if (!result.ok && !result.canceled) {
-        console.error(
-          '[MebsyCore] No se pudo imprimir el PDF Nubefact (sin fallback local)'
-        )
-      }
+    if (sale.ticket) {
+      await window.mebsy.invoices.printTicket(sale.ticket)
       return
     }
 
-    const tipo = String(sale.ticket?.tipoComprobante ?? '')
-    if (tipo === '01' || tipo === '03') {
-      console.error(
-        '[MebsyCore] CPE sin URL de PDF Nubefact; no se imprime ticket local'
-      )
+    if (sale.comprobanteId && sale.pdfPath) {
+      await window.mebsy.invoices.printPdfAuth(sale.comprobanteId)
       return
     }
 
-    // NV (y solo NV): ticket HTML
-    if (!sale.ticket) {
-      console.error('[MebsyCore] Venta sin datos de ticket para imprimir')
-      return
-    }
-
-    const result = await window.mebsy.invoices.printTicket(sale.ticket)
-    if (!result.ok && !result.canceled) {
-      console.error('[MebsyCore] Impresión de ticket HTML no completada')
-    }
+    console.warn('[MebsyCore] Sin ticket/PDF para imprimir')
   } catch (err) {
-    console.error('[MebsyCore] No se pudo imprimir el ticket:', err)
+    console.error('[MebsyCore] Error al imprimir:', err)
   }
 }

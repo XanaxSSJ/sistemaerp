@@ -132,6 +132,30 @@ export class ApiClient {
     return this.request('/api/v1/company', { method: 'PATCH', json: input })
   }
 
+  companyUploadCertificate(input: {
+    fileName: string
+    contentBase64: string
+    password: string
+  }) {
+    return this.request('/api/v1/company/certificate', {
+      method: 'POST',
+      json: input
+    })
+  }
+
+  async invoicesPdfBuffer(comprobanteId: number): Promise<ArrayBuffer> {
+    const headers: Record<string, string> = { Accept: 'application/pdf' }
+    if (this.token) headers.Authorization = `Bearer ${this.token}`
+    const res = await fetch(
+      `${this.baseUrl}/api/v1/invoices/${comprobanteId}/pdf`,
+      { headers, signal: AbortSignal.timeout(30000) }
+    )
+    if (!res.ok) {
+      throw new Error(`No se pudo descargar PDF (${res.status})`)
+    }
+    return res.arrayBuffer()
+  }
+
   branchesList() {
     return this.request('/api/v1/branches')
   }
@@ -141,8 +165,6 @@ export class ApiClient {
     nombre: string
     direccion: string
     telefono?: string
-    nubefactRuta?: string | null
-    nubefactToken?: string | null
   }) {
     return this.request('/api/v1/branches', { method: 'POST', json: input })
   }
@@ -155,8 +177,6 @@ export class ApiClient {
       direccion?: string
       telefono?: string | null
       activa?: boolean
-      nubefactRuta?: string | null
-      nubefactToken?: string | null
     }
   ) {
     return this.request(`/api/v1/branches/${Number(id)}`, {

@@ -24,9 +24,6 @@ interface Sucursal {
   direccion: string
   telefono: string | null
   activa: boolean
-  nubefactRuta: string | null
-  nubefactConfigured: boolean
-  nubefactTokenMasked: string | null
 }
 
 interface Serie {
@@ -42,9 +39,7 @@ const emptyForm = {
   codigo: '',
   nombre: '',
   direccion: '',
-  telefono: '',
-  nubefactRuta: '',
-  nubefactToken: ''
+  telefono: ''
 }
 
 export function BranchesPage() {
@@ -98,9 +93,7 @@ export function BranchesPage() {
       codigo: s.codigo,
       nombre: s.nombre,
       direccion: s.direccion,
-      telefono: s.telefono ?? '',
-      nubefactRuta: s.nubefactRuta ?? '',
-      nubefactToken: ''
+      telefono: s.telefono ?? ''
     })
     setError('')
     setFormOpen(true)
@@ -118,11 +111,7 @@ export function BranchesPage() {
           codigo: form.codigo,
           nombre: form.nombre,
           direccion: form.direccion,
-          telefono: form.telefono,
-          nubefactRuta: form.nubefactRuta || null,
-          ...(form.nubefactToken.trim()
-            ? { nubefactToken: form.nubefactToken.trim() }
-            : {})
+          telefono: form.telefono
         })
         setMsg('Sucursal actualizada')
       } else {
@@ -130,9 +119,7 @@ export function BranchesPage() {
           codigo: form.codigo,
           nombre: form.nombre,
           direccion: form.direccion,
-          telefono: form.telefono,
-          nubefactRuta: form.nubefactRuta || null,
-          nubefactToken: form.nubefactToken || null
+          telefono: form.telefono
         })
         setMsg('Sucursal creada')
       }
@@ -207,7 +194,7 @@ export function BranchesPage() {
     <div>
       <PageHeader
         title="Sucursales"
-        subtitle="Sedes, Nubefact y series SUNAT"
+        subtitle="Sedes y series SUNAT (SEE se configura en Empresa)"
         actions={
           isAdmin ? (
             <Button type="button" onClick={openCreate}>
@@ -236,7 +223,6 @@ export function BranchesPage() {
                 <Th>Código</Th>
                 <Th>Nombre</Th>
                 <Th>Dirección</Th>
-                <Th>Nubefact</Th>
                 <Th>Estado</Th>
                 <Th>Acciones</Th>
               </tr>
@@ -248,11 +234,6 @@ export function BranchesPage() {
                   <Td className="font-semibold">{s.nombre}</Td>
                   <Td className="max-w-[220px] truncate text-[var(--ms-muted)]">
                     {s.direccion}
-                  </Td>
-                  <Td>
-                    <Badge tone={s.nubefactConfigured ? 'ok' : 'neutral'}>
-                      {s.nubefactConfigured ? 'Configurado' : 'Sin API'}
-                    </Badge>
                   </Td>
                   <Td>
                     <Badge tone={s.activa ? 'ok' : 'neutral'}>
@@ -293,7 +274,7 @@ export function BranchesPage() {
       <Dialog open={formOpen} onOpenChange={setFormOpen}>
         <DialogContent
           title={editId != null ? 'Editar sucursal' : 'Nueva sucursal'}
-          description="Datos de la sede y credenciales Nubefact"
+          description="Datos de la sede"
           className="w-[min(520px,calc(100vw-2rem))]"
         >
           <form className="space-y-3" onSubmit={onSubmit}>
@@ -336,46 +317,6 @@ export function BranchesPage() {
               />
             </Field>
 
-            <div className="rounded-[6px] border border-[var(--ms-line)] bg-[var(--ms-panel)] p-3">
-              <div className="mb-2 text-[10px] font-bold tracking-[0.08em] text-[var(--ms-muted)] uppercase">
-                Nubefact (por sede)
-              </div>
-              <Field label="Ruta API">
-                <Input
-                  className="font-mono text-xs"
-                  placeholder="https://api.nubefact.com/api/v1/…"
-                  value={form.nubefactRuta}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, nubefactRuta: e.target.value }))
-                  }
-                />
-              </Field>
-              <Field
-                label={
-                  editId != null && !form.nubefactToken
-                    ? 'Token (vacío = no cambiar)'
-                    : 'Token'
-                }
-                className="mt-2.5"
-              >
-                <Input
-                  className="font-mono text-xs"
-                  type="password"
-                  autoComplete="off"
-                  placeholder={
-                    editId != null
-                      ? rows.find((r) => r.id === editId)
-                          ?.nubefactTokenMasked ?? '••••••••'
-                      : 'Token de integración'
-                  }
-                  value={form.nubefactToken}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, nubefactToken: e.target.value }))
-                  }
-                />
-              </Field>
-            </div>
-
             <div className="flex justify-end gap-2 pt-1">
               <Button
                 type="button"
@@ -400,7 +341,7 @@ export function BranchesPage() {
       <Dialog open={seriesOpen} onOpenChange={setSeriesOpen}>
         <DialogContent
           title={`Series · ${seriesBranch?.nombre ?? ''}`}
-          description="Deben coincidir con Nubefact (máx. 4 caracteres). El correlativo es el próximo número a emitir."
+          description="Series SUNAT (máx. 4 caracteres). El correlativo es el próximo número a emitir."
           className="w-[min(560px,calc(100vw-2rem))]"
         >
           <form className="space-y-3" onSubmit={saveSeries}>

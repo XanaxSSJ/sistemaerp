@@ -41,14 +41,16 @@ type CloudSaleResponse = {
     nombre: string
     direccion: string | null
   } | null
-  nubefact?: {
+  see?: {
     ok: boolean
-    enlace: string | null
-    pdfUrl: string | null
-    xmlUrl: string | null
     aceptada: boolean | null
     sunatDescription: string | null
     hash: string | null
+    xmlPath: string | null
+    cdrPath: string | null
+    pdfPath: string | null
+    pdfUrl: string | null
+    qr: string | null
     error: string | null
   } | null
 }
@@ -84,10 +86,10 @@ function buildTicketPrint(sale: CloudSaleResponse): SaleTicketPrint {
 export async function createCloudSale(
   api: ApiClient,
   input: CreateSaleInput
-): Promise<SaleResult & { nubefactError?: string | null }> {
+): Promise<SaleResult & { seeError?: string | null }> {
   const sale = (await api.salesCreate(input)) as CloudSaleResponse
+  const ticket = buildTicketPrint(sale)
 
-  // Nota de venta: solo ticket HTML propio
   if (sale.tipoComprobante === 'NV' || input.tipoComprobante === 'NV') {
     return {
       ventaId: sale.ventaId,
@@ -100,17 +102,12 @@ export async function createCloudSale(
       comprobanteId: sale.comprobanteId,
       xmlPath: null,
       pdfPath: null,
-      nubefactError: null,
-      ticket: buildTicketPrint(sale)
+      seeError: null,
+      ticket
     }
   }
 
-  // Factura/Boleta: solo Nubefact (sin ticket HTML ni UBL local de impresión)
-  const nubefactPdf =
-    sale.nubefact?.pdfUrl || sale.nubefact?.enlace || null
-  const nubefactOk = Boolean(sale.nubefact?.ok && nubefactPdf)
-
-  if (nubefactOk) {
+  if (!sale.see) {
     return {
       ventaId: sale.ventaId,
       serie: sale.serie,
@@ -120,22 +117,10 @@ export async function createCloudSale(
       total: sale.total,
       items: sale.items,
       comprobanteId: sale.comprobanteId,
-      xmlPath: sale.nubefact?.xmlUrl ?? null,
-      pdfPath: nubefactPdf,
-      nubefactError: null,
-      nubefactEnlace: sale.nubefact?.enlace ?? null,
-      nubefactPdf,
-      ticket: undefined
-    }
-  }
-
-  if (sale.nubefact?.error) {
-    try {
-      await api.invoicesAttachDocuments(sale.comprobanteId, {
-        estado: 'error_nubefact'
-      })
-    } catch (err) {
-      console.error('[MebsyCore] No se pudo marcar error Nubefact:', err)
+      xmlPath: null,
+      pdfPath: null,
+      seeError: 'Sin respuesta SEE (revisá Empresa → SEE)',
+      ticket
     }
   }
 
@@ -148,13 +133,9 @@ export async function createCloudSale(
     total: sale.total,
     items: sale.items,
     comprobanteId: sale.comprobanteId,
-    xmlPath: sale.nubefact?.xmlUrl ?? null,
-    pdfPath: nubefactPdf,
-    nubefactError:
-      sale.nubefact?.error ??
-      (nubefactPdf ? null : 'Nubefact no devolvió PDF del comprobante'),
-    nubefactEnlace: sale.nubefact?.enlace ?? null,
-    nubefactPdf,
-    ticket: undefined
+    xmlPath: sale.see.xmlPath,
+    pdfPath: sale.see.pdfUrl ?? sale.see.pdfPath,
+    seeError: sale.see.ok ? null : sale.see.error,
+    ticket
   }
 }

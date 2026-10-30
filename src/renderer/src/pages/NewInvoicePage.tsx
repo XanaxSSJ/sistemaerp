@@ -377,11 +377,10 @@ export function NewInvoicePage() {
         .catch(() => undefined)
 
       setLastSale(result)
-      // Impresión no bloquea el siguiente cobro; el PDF Nubefact sigue siendo el oficial
       void printSaleTicket(result).finally(() => setLastSale(null))
-      if (result.nubefactError) {
+      if (result.seeError) {
         setError(
-          `Comprobante ${result.serie}-${String(result.correlativo).padStart(8, '0')} guardado. SUNAT/Nubefact: ${result.nubefactError}`
+          `Comprobante ${result.serie}-${String(result.correlativo).padStart(8, '0')} guardado. SUNAT: ${result.seeError}`
         )
       } else {
         setError('')
@@ -402,10 +401,10 @@ export function NewInvoicePage() {
 
       {error ? <Alert tone="danger">{error}</Alert> : null}
       {lastSale ? (
-        <Alert tone={lastSale.nubefactError ? 'warn' : 'ok'}>
+        <Alert tone={lastSale.seeError ? 'warn' : 'ok'}>
           {lastSale.serie}-{String(lastSale.correlativo).padStart(8, '0')}
-          {lastSale.nubefactError
-            ? ` emitido. SUNAT: ${lastSale.nubefactError}`
+          {lastSale.seeError
+            ? ` emitido. SUNAT: ${lastSale.seeError}`
             : ' — abriendo impresión…'}
         </Alert>
       ) : null}

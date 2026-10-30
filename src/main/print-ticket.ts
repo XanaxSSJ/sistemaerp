@@ -178,17 +178,9 @@ export async function printTicketHtml(
   }
 }
 
-/**
- * Descarga el PDF ticket de Nubefact y abre el diálogo de impresión.
- * La ventana se muestra un instante: Chromium deja pageSize vacío si el PDF
- * se imprime totalmente oculto.
- */
-export async function printPdfFromUrl(
-  pdfUrl: string
+async function printPdfBuffer(
+  buf: Buffer
 ): Promise<{ ok: boolean; canceled?: boolean }> {
-  const url = pdfUrl?.trim()
-  if (!url) return { ok: false }
-
   let tmpPath: string | null = null
   const win = new BrowserWindow({
     show: true,
@@ -203,32 +195,13 @@ export async function printPdfFromUrl(
   })
 
   try {
-    // Descarga en paralelo a la creación de la ventana de impresión
-    const download = (async () => {
-      const res = await fetch(url, {
-        signal: AbortSignal.timeout(30000)
-      })
-      if (!res.ok) {
-        throw new Error(`No se pudo descargar PDF Nubefact (${res.status})`)
-      }
-      const buf = Buffer.from(await res.arrayBuffer())
-      const path = join(
-        app.getPath('temp'),
-        `mebsy-nubefact-${Date.now()}.pdf`
-      )
-      await writeFile(path, buf)
-      return path
-    })()
-
-    tmpPath = await download
-
+    tmpPath = join(app.getPath('temp'), `mebsy-cpe-${Date.now()}.pdf`)
+    await writeFile(tmpPath, buf)
     await win.loadURL(pathToFileURL(tmpPath).href)
-    // Delay fijo: el plugin PDF de Chromium necesita montar el documento
     await new Promise((r) => setTimeout(r, 280))
-
     return await runPrintDialog(win)
   } catch (err) {
-    console.error('[MebsyCore] Error al imprimir PDF Nubefact:', err)
+    console.error('[MebsyCore] Error al imprimir PDF:', err)
     return { ok: false }
   } finally {
     if (!win.isDestroyed()) win.destroy()
@@ -236,4 +209,27 @@ export async function printPdfFromUrl(
       void unlink(tmpPath).catch(() => undefined)
     }
   }
+}
+
+/** Descarga PDF por URL pública e imprime. */
+export async function printPdfFromUrl(
+  pdfUrl: string
+): Promise<{ ok: boolean; canceled?: boolean }> {
+  const url = pdfUrl?.trim()
+  if (!url) return { ok: false }
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(30000) })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return printPdfBuffer(Buffer.from(await res.arrayBuffer()))
+  } catch (err) {
+    console.error('[MebsyCore] Error al descargar PDF:', err)
+    return { ok: false }
+  }
+}
+
+/** Imprime PDF ya descargado (API autenticada). */
+export async function printPdfFromBuffer(
+  buf: Buffer
+): Promise<{ ok: boolean; canceled?: boolean }> {
+  return printPdfBuffer(buf)
 }

@@ -92,7 +92,12 @@ const api = {
   company: {
     get: () => ipcRenderer.invoke('company:get'),
     update: (input: Record<string, unknown>) =>
-      ipcRenderer.invoke('company:update', input)
+      ipcRenderer.invoke('company:update', input),
+    uploadCertificate: (input: {
+      fileName: string
+      contentBase64: string
+      password: string
+    }) => ipcRenderer.invoke('company:uploadCertificate', input)
   },
   branches: {
     list: () => ipcRenderer.invoke('branches:list'),
@@ -101,8 +106,6 @@ const api = {
       nombre: string
       direccion: string
       telefono?: string
-      nubefactRuta?: string | null
-      nubefactToken?: string | null
     }) => ipcRenderer.invoke('branches:create', input),
     update: (
       id: number,
@@ -112,8 +115,6 @@ const api = {
         direccion?: string
         telefono?: string | null
         activa?: boolean
-        nubefactRuta?: string | null
-        nubefactToken?: string | null
       }
     ) => ipcRenderer.invoke('branches:update', id, input),
     series: (sucursalId: number) =>
@@ -261,6 +262,8 @@ const api = {
       pageSize?: number
     }) => ipcRenderer.invoke('invoices:list', query),
     open: (path: string) => ipcRenderer.invoke('invoices:open', path),
+    openPdfAuth: (comprobanteId: number) =>
+      ipcRenderer.invoke('invoices:openPdfAuth', comprobanteId) as Promise<boolean>,
     printTicket: (ticket: SaleTicketPrint) =>
       ipcRenderer.invoke('invoices:printTicket', ticket) as Promise<{
         ok: boolean
@@ -268,6 +271,11 @@ const api = {
       }>,
     printPdf: (pdfUrl: string) =>
       ipcRenderer.invoke('invoices:printPdf', pdfUrl) as Promise<{
+        ok: boolean
+        canceled?: boolean
+      }>,
+    printPdfAuth: (comprobanteId: number) =>
+      ipcRenderer.invoke('invoices:printPdfAuth', comprobanteId) as Promise<{
         ok: boolean
         canceled?: boolean
       }>

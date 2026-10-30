@@ -37,11 +37,8 @@ interface InvoiceRow {
   estado: string
   xmlPath: string | null
   pdfPath: string | null
-  nubefactEnlace: string | null
-  nubefactPdf: string | null
-  nubefactXml: string | null
-  nubefactAceptada: boolean | null
-  nubefactSunatDescription: string | null
+  sunatAceptada: boolean | null
+  sunatDescription: string | null
   createdAt: string
   clienteNombre: string | null
   clienteDocumento: string | null
@@ -100,14 +97,17 @@ function estadoTone(
 ): 'ok' | 'warn' | 'danger' | 'accent' | 'neutral' {
   if (aceptada === true || estado === 'aceptado_sunat') return 'ok'
   if (estado.includes('error') || estado.includes('anul')) return 'danger'
-  if (estado.includes('nubefact') || estado === 'enviado_nubefact') return 'accent'
+  if (estado === 'rechazado_sunat' || estado.includes('see')) return 'warn'
   if (estado === 'generado') return 'warn'
   return 'neutral'
 }
 
 function sunatBadge(r: InvoiceRow) {
-  if (r.nubefactAceptada === true) return { tone: 'ok' as const, label: 'Aceptada' }
-  if (r.nubefactAceptada === false) return { tone: 'warn' as const, label: 'Pendiente' }
+  if (r.sunatAceptada === true || r.estado === 'aceptado_sunat')
+    return { tone: 'ok' as const, label: 'Aceptada' }
+  if (r.estado === 'rechazado_sunat')
+    return { tone: 'warn' as const, label: 'Rechazada' }
+  if (r.sunatAceptada === false) return { tone: 'warn' as const, label: 'Pendiente' }
   if (r.estado.includes('error')) return { tone: 'danger' as const, label: 'Error' }
   if (r.estado.includes('anul')) return { tone: 'danger' as const, label: 'Anulado' }
   return { tone: 'neutral' as const, label: '—' }
@@ -227,24 +227,28 @@ export function InvoicesPage() {
     void reload(page)
   })
 
-  function openDoc(r: InvoiceRow) {
-    const url = r.nubefactPdf || r.nubefactEnlace || r.pdfPath
-    if (!url) {
-      setMsg('Este comprobante aún no tiene PDF o enlace disponible')
-      return
-    }
-    void window.mebsy.invoices.open(url)
+  async function openDoc(r: InvoiceRow) {
     setMenuId(null)
+    setError('')
+    try {
+      if (!r.pdfPath && r.sunatAceptada == null && !r.estado.includes('sunat') && !r.estado.includes('see')) {
+        setMsg('Este comprobante aún no tiene PDF disponible')
+        return
+      }
+      await window.mebsy.invoices.openPdfAuth(r.id)
+    } catch (err) {
+      setError(parseIpcError(err))
+    }
   }
 
   function consultarSunat(_r: InvoiceRow) {
     setMenuId(null)
-    setMsg('Consulta SUNAT: próximamente (Nubefact consultar_comprobante)')
+    setMsg('Consulta SUNAT: próximamente')
   }
 
   function anular(_r: InvoiceRow) {
     setMenuId(null)
-    setMsg('Anulación: próximamente (Nubefact anular comprobante)')
+    setMsg('Anulación / baja: próximamente')
   }
 
   function generarReporte() {
@@ -399,18 +403,18 @@ export function InvoicesPage() {
                       {r.serie}-{String(r.correlativo).padStart(8, '0')}
                     </Td>
                     <Td>
-                      <Badge tone={estadoTone(r.estado, r.nubefactAceptada)}>
+                      <Badge tone={estadoTone(r.estado, r.sunatAceptada)}>
                         {r.estado}
                       </Badge>
                     </Td>
                     <Td>
                       <Badge tone={sunat.tone}>{sunat.label}</Badge>
-                      {r.nubefactSunatDescription ? (
+                      {r.sunatDescription ? (
                         <div
                           className="mt-0.5 max-w-[140px] truncate text-[10px] text-[var(--ms-muted)]"
-                          title={r.nubefactSunatDescription}
+                          title={r.sunatDescription}
                         >
-                          {r.nubefactSunatDescription}
+                          {r.sunatDescription}
                         </div>
                       ) : null}
                     </Td>

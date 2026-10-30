@@ -14,7 +14,7 @@ Stock y catálogo con **una sola fuente de verdad** (Postgres). El desktop Elect
 | Auth | JWT HS256 de acceso (`JWT_EXPIRES_IN`, p. ej. 8h). Sin refresh token aún |
 | Sync | Cloud + SSE in-process (`sale.created`, `stock.updated`, …) |
 | Offline | Fase futura |
-| Facturación | Nubefact para 01/03; NV interna; UBL/PDF local solo como fallback |
+| Facturación | SEE del contribuyente (Greenter) para 01/03; NV interna |
 | Tipos compartidos | `core/types.ts`, `core/money.ts`, `core/ubl/*` (sin SQLite) |
 
 ## Arquitectura
@@ -42,8 +42,8 @@ flowchart TB
 ### Roles
 
 - **PostgreSQL**: empresa, sucursales, usuarios, productos, stocks, ventas, comprobantes, movimientos, transferencias.
-- **API**: auth, autorización por sucursal, ventas, inventario, Nubefact.
-- **Desktop**: IPC → `ApiClient`; impresión de ticket HTML (NV) o PDF Nubefact (CPE).
+- **API**: auth, autorización por sucursal, ventas, inventario, SEE/Greenter.
+- **Desktop**: IPC → `ApiClient`; impresión ticket HTML (NV/CPE); PDF SEE vía API.
 - **Migraciones**: `supabase/migrations/*.sql` es la fuente de verdad DDL; Drizzle schema en `api/src/infrastructure/persistence/drizzle/schema.ts`.
 
 ## Monorepo actual
@@ -61,7 +61,7 @@ SistemaPos/
 
 - Login devuelve usuario + sucursales permitidas.
 - Cajero **debe** enviar `sucursalId` en listados de ventas/comprobantes; admin puede omitirlo.
-- Credenciales Nubefact no se exponen al renderer (solo flags/máscaras).
+- Certificado/SOL SEE solo en servidor; el renderer no ve secretos.
 
 ## Ventas
 
@@ -69,7 +69,7 @@ SistemaPos/
 - Correlativo: incremento atómico en `series`.
 - Pagos: tabla `venta_pagos`.
 - Stock: movimiento `salida` + `motivo: venta`.
-- CPE: POST `/sales` espera Nubefact y el desktop imprime su PDF oficial.
+- CPE: POST `/sales` emite vía SEE (api-sunaterp) y el desktop imprime ticket local.
 
 ## Variables de entorno (API)
 

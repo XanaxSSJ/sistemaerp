@@ -13,7 +13,11 @@ import type {
 import type { ApiClient } from './cloud/api-client'
 import type { RealtimeClient } from './cloud/realtime-client'
 import { createCloudSale } from './cloud/sale-orchestrator'
-import { printPdfFromUrl, printTicketHtml } from './print-ticket'
+import {
+  printPdfFromBuffer,
+  printPdfFromUrl,
+  printTicketHtml
+} from './print-ticket'
 
 export function registerIpcHandlers(
   api: ApiClient,
@@ -70,6 +74,13 @@ export function registerIpcHandlers(
 
   ipcMain.handle('company:get', async () => api.companyGet())
   ipcMain.handle('company:update', async (_e, input) => api.companyUpdate(input))
+  ipcMain.handle(
+    'company:uploadCertificate',
+    async (
+      _e,
+      input: { fileName: string; contentBase64: string; password: string }
+    ) => api.companyUploadCertificate(input)
+  )
 
   ipcMain.handle('branches:list', async () => api.branchesList())
   ipcMain.handle('branches:create', async (_e, input) => api.branchesCreate(input))
@@ -84,8 +95,6 @@ export function registerIpcHandlers(
         direccion?: string
         telefono?: string | null
         activa?: boolean
-        nubefactRuta?: string | null
-        nubefactToken?: string | null
       }
     ) => api.branchesUpdate(id, input)
   )
@@ -310,6 +319,25 @@ export function registerIpcHandlers(
     await shell.openPath(path)
     return true
   })
+  /** Descarga PDF SEE desde la API (auth) y lo abre con el visor del sistema. */
+  ipcMain.handle('invoices:openPdfAuth', async (_e, comprobanteId: number) => {
+    const { writeFile, unlink } = await import('node:fs/promises')
+    const { join } = await import('node:path')
+    const { tmpdir } = await import('node:os')
+    const buf = Buffer.from(await api.invoicesPdfBuffer(comprobanteId))
+    const tmp = join(tmpdir(), `mebsy-cpe-${comprobanteId}-${Date.now()}.pdf`)
+    await writeFile(tmp, buf)
+    const err = await shell.openPath(tmp)
+    if (err) {
+      void unlink(tmp).catch(() => undefined)
+      throw new Error(err || 'No se pudo abrir el PDF')
+    }
+    // No borrar de inmediato: el visor necesita el archivo
+    setTimeout(() => {
+      void unlink(tmp).catch(() => undefined)
+    }, 120_000)
+    return true
+  })
   ipcMain.handle('invoices:printTicket', async (_e, ticket: SaleTicketPrint) => {
     if (!ticket?.serie) return { ok: false }
     return printTicketHtml(ticket)
@@ -317,5 +345,9 @@ export function registerIpcHandlers(
   ipcMain.handle('invoices:printPdf', async (_e, pdfUrl: string) => {
     if (!pdfUrl?.trim()) return { ok: false }
     return printPdfFromUrl(pdfUrl.trim())
+  })
+  ipcMain.handle('invoices:printPdfAuth', async (_e, comprobanteId: number) => {
+    const buf = await api.invoicesPdfBuffer(comprobanteId)
+    return printPdfFromBuffer(Buffer.from(buf))
   })
 }

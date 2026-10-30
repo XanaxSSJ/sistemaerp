@@ -36,7 +36,7 @@ export interface CreateSaleInput {
   serie?: string
   observaciones?: string | null
   referenciaPago?: string | null
-  /** ISO date (yyyy-mm-dd) para emisión Nubefact. */
+  /** ISO date (yyyy-mm-dd) para fecha de emisión CPE. */
   fechaEmision?: string | null
 }
 
@@ -123,11 +123,8 @@ export interface SaleResult {
   comprobanteId: number
   xmlPath: string | null
   pdfPath: string | null
-  /** Presente si la sede tiene Nubefact y la emisión falló (venta igual se guardó). */
-  nubefactError?: string | null
-  nubefactEnlace?: string | null
-  /** URL del PDF ticket de Nubefact (formato TICKET). */
-  nubefactPdf?: string | null
+  /** Presente si SEE falló (venta igual se guardó). */
+  seeError?: string | null
   /** Payload de impresión inmediata tras emitir (NV o fallback local). */
   ticket?: SaleTicketPrint
 }
