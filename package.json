@@ -54,6 +54,7 @@
     "electron": "^34.2.0",
     "electron-builder": "^25.1.8",
     "electron-vite": "^3.0.0",
+    "rcedit": "^5.0.2",
     "tailwindcss": "^4.0.9",
     "typescript": "^5.7.3",
     "vite": "^6.1.1"
@@ -90,12 +91,13 @@
         "vPrefixedTagName": true
       }
     ],
+    "afterPack": "./scripts/after-pack-win-icon.mjs",
     "win": {
       "icon": "build/icon.ico",
       "target": [
         "nsis"
       ],
-      "signAndEditExecutable": true
+      "signAndEditExecutable": false
     },
     "nsis": {
       "oneClick": false,
