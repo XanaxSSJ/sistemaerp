@@ -1,0 +1,94 @@
+{
+  "name": "mebsystore",
+  "version": "0.1.0",
+  "description": "MebsyStore — Sistema POS desktop con inventario y facturación electrónica SUNAT",
+  "main": "./out/main/index.js",
+  "author": "MebsyStore",
+  "license": "UNLICENSED",
+  "private": true,
+  "packageManager": "pnpm@11.22.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XanaxSSJ/sistemaerp.git"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
+    "postinstall": "electron-builder install-app-deps",
+    "create-admin": "node scripts/create-admin.mjs",
+    "package:dir": "node scripts/assert-prod-api-url.mjs && electron-vite build --mode production && electron-builder --dir",
+    "dist": "node scripts/assert-prod-api-url.mjs && electron-vite build --mode production && electron-builder --win --publish never",
+    "dist:publish": "node scripts/assert-prod-api-url.mjs && electron-vite build --mode production && electron-builder --win --publish always"
+  },
+  "dependencies": {
+    "@fontsource-variable/newsreader": "^5.3.0",
+    "@fontsource-variable/source-sans-3": "^5.3.1",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@radix-ui/react-dialog": "^1.3.1",
+    "@radix-ui/react-slot": "^1.5.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "electron-updater": "6.3.9",
+    "lucide-react": "^0.475.0",
+    "pdfkit": "^0.16.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.2.0",
+    "recharts": "^3.10.1",
+    "tailwind-merge": "^3.7.0",
+    "xlsx": "^0.18.5",
+    "xmlbuilder2": "^3.1.1",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.9",
+    "@types/node": "^22.13.5",
+    "@types/pdfkit": "^0.13.9",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^34.2.0",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^3.0.0",
+    "tailwindcss": "^4.0.9",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.1"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "better-sqlite3"
+    ]
+  },
+  "build": {
+    "appId": "com.mebsystore.pos",
+    "productName": "MebsyStore",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "XanaxSSJ",
+        "repo": "sistemaerp",
+        "releaseType": "release"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

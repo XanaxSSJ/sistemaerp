@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "types": ["node"],
+    "paths": {
+      "@core/*": ["./core/*"]
+    },
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "target": "ESNext",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "lib": ["ESNext"]
+  },
+  "include": [
+    "electron.vite.config.ts",
+    "src/main/**/*",
+    "src/main/env.d.ts",
+    "src/preload/**/*",
+    "core/**/*"
+  ]
+}

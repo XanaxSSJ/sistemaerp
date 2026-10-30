@@ -1,0 +1,922 @@
+{
+  "brands": [
+    "Nike",
+    "Adidas",
+    "Puma",
+    "Levi's",
+    "Zara",
+    "H&M",
+    "Under Armour",
+    "Columbia",
+    "Converse",
+    "Cat",
+    "Dickies",
+    "Mebsy",
+    "Reebok",
+    "The North Face",
+    "Vans"
+  ],
+  "products": [
+    {
+      "codigo": "DEM001",
+      "codigo_barras": "775101000001",
+      "nombre": "Kit básico tienda",
+      "descripcion": "Producto demo · General",
+      "precio": 5,
+      "categoria_id": 1,
+      "marca": "Puma"
+    },
+    {
+      "codigo": "DEM002",
+      "codigo_barras": "775101000002",
+      "nombre": "Bolsa reutilizable",
+      "descripcion": "Producto demo · General",
+      "precio": 7.73,
+      "categoria_id": 1,
+      "marca": "Levi's"
+    },
+    {
+      "codigo": "DEM003",
+      "codigo_barras": "775101000003",
+      "nombre": "Llavero logo",
+      "descripcion": "Producto demo · General",
+      "precio": 10.45,
+      "categoria_id": 1,
+      "marca": "Zara"
+    },
+    {
+      "codigo": "DEM004",
+      "codigo_barras": "775101000004",
+      "nombre": "Polera básica algodón S",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 29,
+      "categoria_id": 2,
+      "marca": "Under Armour"
+    },
+    {
+      "codigo": "DEM005",
+      "codigo_barras": "775101000005",
+      "nombre": "Polera oversize M",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 35.36,
+      "categoria_id": 2,
+      "marca": "Columbia"
+    },
+    {
+      "codigo": "DEM006",
+      "codigo_barras": "775101000006",
+      "nombre": "Polera dry-fit L",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 41.73,
+      "categoria_id": 2,
+      "marca": "Converse"
+    },
+    {
+      "codigo": "DEM007",
+      "codigo_barras": "775101000007",
+      "nombre": "Polera cuello V XL",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 48.09,
+      "categoria_id": 2,
+      "marca": "Cat"
+    },
+    {
+      "codigo": "DEM008",
+      "codigo_barras": "775101000008",
+      "nombre": "Polera raglan Negro",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 54.45,
+      "categoria_id": 2,
+      "marca": "Dickies"
+    },
+    {
+      "codigo": "DEM009",
+      "codigo_barras": "775101000009",
+      "nombre": "Polera estampada Azul",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 60.82,
+      "categoria_id": 2,
+      "marca": "Mebsy"
+    },
+    {
+      "codigo": "DEM010",
+      "codigo_barras": "775101000010",
+      "nombre": "Polera slim fit Blanco",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 67.18,
+      "categoria_id": 2,
+      "marca": "Reebok"
+    },
+    {
+      "codigo": "DEM011",
+      "codigo_barras": "775101000011",
+      "nombre": "Polera crop Gris",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 73.55,
+      "categoria_id": 2,
+      "marca": "The North Face"
+    },
+    {
+      "codigo": "DEM012",
+      "codigo_barras": "775101000012",
+      "nombre": "Polera manga 3/4 S",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 79.91,
+      "categoria_id": 2,
+      "marca": "Vans"
+    },
+    {
+      "codigo": "DEM013",
+      "codigo_barras": "775101000013",
+      "nombre": "Polera performance M",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 86.27,
+      "categoria_id": 2,
+      "marca": "Nike"
+    },
+    {
+      "codigo": "DEM014",
+      "codigo_barras": "775101000014",
+      "nombre": "Polera premium piqué L",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 92.64,
+      "categoria_id": 2,
+      "marca": "Adidas"
+    },
+    {
+      "codigo": "DEM015",
+      "codigo_barras": "775101000015",
+      "nombre": "Polera kids XL",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 99,
+      "categoria_id": 2,
+      "marca": "Puma"
+    },
+    {
+      "codigo": "DEM016",
+      "codigo_barras": "775101000016",
+      "nombre": "Polera cuello redondo Negro",
+      "descripcion": "Producto demo · Poleras",
+      "precio": 29,
+      "categoria_id": 2,
+      "marca": "Levi's"
+    },
+    {
+      "codigo": "DEM017",
+      "codigo_barras": "775101000017",
+      "nombre": "Jean skinny S",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 69,
+      "categoria_id": 3,
+      "marca": "H&M"
+    },
+    {
+      "codigo": "DEM018",
+      "codigo_barras": "775101000018",
+      "nombre": "Jean straight M",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 79.91,
+      "categoria_id": 3,
+      "marca": "Under Armour"
+    },
+    {
+      "codigo": "DEM019",
+      "codigo_barras": "775101000019",
+      "nombre": "Pantalón chino L",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 90.82,
+      "categoria_id": 3,
+      "marca": "Columbia"
+    },
+    {
+      "codigo": "DEM020",
+      "codigo_barras": "775101000020",
+      "nombre": "Pantalón cargo XL",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 101.73,
+      "categoria_id": 3,
+      "marca": "Converse"
+    },
+    {
+      "codigo": "DEM021",
+      "codigo_barras": "775101000021",
+      "nombre": "Jogger fleece Negro",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 112.64,
+      "categoria_id": 3,
+      "marca": "Cat"
+    },
+    {
+      "codigo": "DEM022",
+      "codigo_barras": "775101000022",
+      "nombre": "Pantalón drill Azul",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 123.55,
+      "categoria_id": 3,
+      "marca": "Dickies"
+    },
+    {
+      "codigo": "DEM023",
+      "codigo_barras": "775101000023",
+      "nombre": "Jean mom Blanco",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 134.45,
+      "categoria_id": 3,
+      "marca": "Mebsy"
+    },
+    {
+      "codigo": "DEM024",
+      "codigo_barras": "775101000024",
+      "nombre": "Pantalón sastre Gris",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 145.36,
+      "categoria_id": 3,
+      "marca": "Reebok"
+    },
+    {
+      "codigo": "DEM025",
+      "codigo_barras": "775101000025",
+      "nombre": "Pantalón outdoor S",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 156.27,
+      "categoria_id": 3,
+      "marca": "The North Face"
+    },
+    {
+      "codigo": "DEM026",
+      "codigo_barras": "775101000026",
+      "nombre": "Jean bootcut M",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 167.18,
+      "categoria_id": 3,
+      "marca": "Vans"
+    },
+    {
+      "codigo": "DEM027",
+      "codigo_barras": "775101000027",
+      "nombre": "Pantalón stretch L",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 178.09,
+      "categoria_id": 3,
+      "marca": "Nike"
+    },
+    {
+      "codigo": "DEM028",
+      "codigo_barras": "775101000028",
+      "nombre": "Pantalón wide leg XL",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 189,
+      "categoria_id": 3,
+      "marca": "Adidas"
+    },
+    {
+      "codigo": "DEM029",
+      "codigo_barras": "775101000029",
+      "nombre": "Pantalón jogger tech Negro",
+      "descripcion": "Producto demo · Pantalones",
+      "precio": 69,
+      "categoria_id": 3,
+      "marca": "Puma"
+    },
+    {
+      "codigo": "DEM030",
+      "codigo_barras": "775101000030",
+      "nombre": "Camisa oxford S",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 59,
+      "categoria_id": 4,
+      "marca": "Zara"
+    },
+    {
+      "codigo": "DEM031",
+      "codigo_barras": "775101000031",
+      "nombre": "Camisa linen M",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 68.09,
+      "categoria_id": 4,
+      "marca": "H&M"
+    },
+    {
+      "codigo": "DEM032",
+      "codigo_barras": "775101000032",
+      "nombre": "Camisa denim L",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 77.18,
+      "categoria_id": 4,
+      "marca": "Under Armour"
+    },
+    {
+      "codigo": "DEM033",
+      "codigo_barras": "775101000033",
+      "nombre": "Camisa formal manga larga XL",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 86.27,
+      "categoria_id": 4,
+      "marca": "Columbia"
+    },
+    {
+      "codigo": "DEM034",
+      "codigo_barras": "775101000034",
+      "nombre": "Camisa casual cuadros Negro",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 95.36,
+      "categoria_id": 4,
+      "marca": "Converse"
+    },
+    {
+      "codigo": "DEM035",
+      "codigo_barras": "775101000035",
+      "nombre": "Camisa hawaii Azul",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 104.45,
+      "categoria_id": 4,
+      "marca": "Cat"
+    },
+    {
+      "codigo": "DEM036",
+      "codigo_barras": "775101000036",
+      "nombre": "Camisa slim office Blanco",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 113.55,
+      "categoria_id": 4,
+      "marca": "Dickies"
+    },
+    {
+      "codigo": "DEM037",
+      "codigo_barras": "775101000037",
+      "nombre": "Camisa flannel Gris",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 122.64,
+      "categoria_id": 4,
+      "marca": "Mebsy"
+    },
+    {
+      "codigo": "DEM038",
+      "codigo_barras": "775101000038",
+      "nombre": "Camisa bowling S",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 131.73,
+      "categoria_id": 4,
+      "marca": "Reebok"
+    },
+    {
+      "codigo": "DEM039",
+      "codigo_barras": "775101000039",
+      "nombre": "Camisa guayabera M",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 140.82,
+      "categoria_id": 4,
+      "marca": "The North Face"
+    },
+    {
+      "codigo": "DEM040",
+      "codigo_barras": "775101000040",
+      "nombre": "Camisa stretch office L",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 149.91,
+      "categoria_id": 4,
+      "marca": "Vans"
+    },
+    {
+      "codigo": "DEM041",
+      "codigo_barras": "775101000041",
+      "nombre": "Camisa popelín XL",
+      "descripcion": "Producto demo · Camisas",
+      "precio": 159,
+      "categoria_id": 4,
+      "marca": "Nike"
+    },
+    {
+      "codigo": "DEM042",
+      "codigo_barras": "775101000042",
+      "nombre": "Hoodie clásico S",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 79,
+      "categoria_id": 5,
+      "marca": "Puma"
+    },
+    {
+      "codigo": "DEM043",
+      "codigo_barras": "775101000043",
+      "nombre": "Crewneck fleece M",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 91.73,
+      "categoria_id": 5,
+      "marca": "Levi's"
+    },
+    {
+      "codigo": "DEM044",
+      "codigo_barras": "775101000044",
+      "nombre": "Sudadera zip L",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 104.45,
+      "categoria_id": 5,
+      "marca": "Zara"
+    },
+    {
+      "codigo": "DEM045",
+      "codigo_barras": "775101000045",
+      "nombre": "Hoodie oversized XL",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 117.18,
+      "categoria_id": 5,
+      "marca": "H&M"
+    },
+    {
+      "codigo": "DEM046",
+      "codigo_barras": "775101000046",
+      "nombre": "Sudadera técnica Negro",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 129.91,
+      "categoria_id": 5,
+      "marca": "Under Armour"
+    },
+    {
+      "codigo": "DEM047",
+      "codigo_barras": "775101000047",
+      "nombre": "Hoodie college Azul",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 142.64,
+      "categoria_id": 5,
+      "marca": "Columbia"
+    },
+    {
+      "codigo": "DEM048",
+      "codigo_barras": "775101000048",
+      "nombre": "Sudadera crop Blanco",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 155.36,
+      "categoria_id": 5,
+      "marca": "Converse"
+    },
+    {
+      "codigo": "DEM049",
+      "codigo_barras": "775101000049",
+      "nombre": "Hoodie canguro Gris",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 168.09,
+      "categoria_id": 5,
+      "marca": "Cat"
+    },
+    {
+      "codigo": "DEM050",
+      "codigo_barras": "775101000050",
+      "nombre": "Sudadera french terry S",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 180.82,
+      "categoria_id": 5,
+      "marca": "Dickies"
+    },
+    {
+      "codigo": "DEM051",
+      "codigo_barras": "775101000051",
+      "nombre": "Hoodie kids M",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 193.55,
+      "categoria_id": 5,
+      "marca": "Mebsy"
+    },
+    {
+      "codigo": "DEM052",
+      "codigo_barras": "775101000052",
+      "nombre": "Sudadera half-zip L",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 206.27,
+      "categoria_id": 5,
+      "marca": "Reebok"
+    },
+    {
+      "codigo": "DEM053",
+      "codigo_barras": "775101000053",
+      "nombre": "Hoodie heavyweight XL",
+      "descripcion": "Producto demo · Sudaderas",
+      "precio": 219,
+      "categoria_id": 5,
+      "marca": "The North Face"
+    },
+    {
+      "codigo": "DEM054",
+      "codigo_barras": "775101000054",
+      "nombre": "Overol denim S",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 99,
+      "categoria_id": 6,
+      "marca": "Nike"
+    },
+    {
+      "codigo": "DEM055",
+      "codigo_barras": "775101000055",
+      "nombre": "Overol drill M",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 112.64,
+      "categoria_id": 6,
+      "marca": "Adidas"
+    },
+    {
+      "codigo": "DEM056",
+      "codigo_barras": "775101000056",
+      "nombre": "Overol cargo trabajo L",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 126.27,
+      "categoria_id": 6,
+      "marca": "Puma"
+    },
+    {
+      "codigo": "DEM057",
+      "codigo_barras": "775101000057",
+      "nombre": "Overol corto XL",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 139.91,
+      "categoria_id": 6,
+      "marca": "Levi's"
+    },
+    {
+      "codigo": "DEM058",
+      "codigo_barras": "775101000058",
+      "nombre": "Overol industrial Negro",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 153.55,
+      "categoria_id": 6,
+      "marca": "Zara"
+    },
+    {
+      "codigo": "DEM059",
+      "codigo_barras": "775101000059",
+      "nombre": "Overol fashion Azul",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 167.18,
+      "categoria_id": 6,
+      "marca": "H&M"
+    },
+    {
+      "codigo": "DEM060",
+      "codigo_barras": "775101000060",
+      "nombre": "Overol mecánico Blanco",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 180.82,
+      "categoria_id": 6,
+      "marca": "Under Armour"
+    },
+    {
+      "codigo": "DEM061",
+      "codigo_barras": "775101000061",
+      "nombre": "Overol kids Gris",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 194.45,
+      "categoria_id": 6,
+      "marca": "Columbia"
+    },
+    {
+      "codigo": "DEM062",
+      "codigo_barras": "775101000062",
+      "nombre": "Overol stretch S",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 208.09,
+      "categoria_id": 6,
+      "marca": "Converse"
+    },
+    {
+      "codigo": "DEM063",
+      "codigo_barras": "775101000063",
+      "nombre": "Overol reforzado M",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 221.73,
+      "categoria_id": 6,
+      "marca": "Cat"
+    },
+    {
+      "codigo": "DEM064",
+      "codigo_barras": "775101000064",
+      "nombre": "Overol farming L",
+      "descripcion": "Producto demo · Overoles",
+      "precio": 235.36,
+      "categoria_id": 6,
+      "marca": "Dickies"
+    },
+    {
+      "codigo": "DEM065",
+      "codigo_barras": "775101000065",
+      "nombre": "Chamarra bomber S",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 119,
+      "categoria_id": 7,
+      "marca": "Reebok"
+    },
+    {
+      "codigo": "DEM066",
+      "codigo_barras": "775101000066",
+      "nombre": "Chamarra denim M",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 139.91,
+      "categoria_id": 7,
+      "marca": "The North Face"
+    },
+    {
+      "codigo": "DEM067",
+      "codigo_barras": "775101000067",
+      "nombre": "Parka impermeable L",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 160.82,
+      "categoria_id": 7,
+      "marca": "Vans"
+    },
+    {
+      "codigo": "DEM068",
+      "codigo_barras": "775101000068",
+      "nombre": "Chamarra softshell XL",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 181.73,
+      "categoria_id": 7,
+      "marca": "Nike"
+    },
+    {
+      "codigo": "DEM069",
+      "codigo_barras": "775101000069",
+      "nombre": "Chamarra puffer Negro",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 202.64,
+      "categoria_id": 7,
+      "marca": "Adidas"
+    },
+    {
+      "codigo": "DEM070",
+      "codigo_barras": "775101000070",
+      "nombre": "Chamarra universitaria Azul",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 223.55,
+      "categoria_id": 7,
+      "marca": "Puma"
+    },
+    {
+      "codigo": "DEM071",
+      "codigo_barras": "775101000071",
+      "nombre": "Chamarra cuero sintético Blanco",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 244.45,
+      "categoria_id": 7,
+      "marca": "Levi's"
+    },
+    {
+      "codigo": "DEM072",
+      "codigo_barras": "775101000072",
+      "nombre": "Chamarra windbreaker Gris",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 265.36,
+      "categoria_id": 7,
+      "marca": "Zara"
+    },
+    {
+      "codigo": "DEM073",
+      "codigo_barras": "775101000073",
+      "nombre": "Chamarra sherpa S",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 286.27,
+      "categoria_id": 7,
+      "marca": "H&M"
+    },
+    {
+      "codigo": "DEM074",
+      "codigo_barras": "775101000074",
+      "nombre": "Chamarra racing M",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 307.18,
+      "categoria_id": 7,
+      "marca": "Under Armour"
+    },
+    {
+      "codigo": "DEM075",
+      "codigo_barras": "775101000075",
+      "nombre": "Chamarra outdoor L",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 328.09,
+      "categoria_id": 7,
+      "marca": "Columbia"
+    },
+    {
+      "codigo": "DEM076",
+      "codigo_barras": "775101000076",
+      "nombre": "Chamarra soft quilt XL",
+      "descripcion": "Producto demo · Chamarras",
+      "precio": 349,
+      "categoria_id": 7,
+      "marca": "Converse"
+    },
+    {
+      "codigo": "DEM077",
+      "codigo_barras": "775101000077",
+      "nombre": "Zapatilla running S",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 129,
+      "categoria_id": 8,
+      "marca": "Dickies"
+    },
+    {
+      "codigo": "DEM078",
+      "codigo_barras": "775101000078",
+      "nombre": "Zapatilla urbana M",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 153.55,
+      "categoria_id": 8,
+      "marca": "Mebsy"
+    },
+    {
+      "codigo": "DEM079",
+      "codigo_barras": "775101000079",
+      "nombre": "Zapatilla high-top L",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 178.09,
+      "categoria_id": 8,
+      "marca": "Reebok"
+    },
+    {
+      "codigo": "DEM080",
+      "codigo_barras": "775101000080",
+      "nombre": "Zapatilla skate XL",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 202.64,
+      "categoria_id": 8,
+      "marca": "The North Face"
+    },
+    {
+      "codigo": "DEM081",
+      "codigo_barras": "775101000081",
+      "nombre": "Zapatilla training Negro",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 227.18,
+      "categoria_id": 8,
+      "marca": "Vans"
+    },
+    {
+      "codigo": "DEM082",
+      "codigo_barras": "775101000082",
+      "nombre": "Sandalia sport Azul",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 251.73,
+      "categoria_id": 8,
+      "marca": "Nike"
+    },
+    {
+      "codigo": "DEM083",
+      "codigo_barras": "775101000083",
+      "nombre": "Zapatilla kids Blanco",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 276.27,
+      "categoria_id": 8,
+      "marca": "Adidas"
+    },
+    {
+      "codigo": "DEM084",
+      "codigo_barras": "775101000084",
+      "nombre": "Zapatilla trail Gris",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 300.82,
+      "categoria_id": 8,
+      "marca": "Puma"
+    },
+    {
+      "codigo": "DEM085",
+      "codigo_barras": "775101000085",
+      "nombre": "Slip-on casual S",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 325.36,
+      "categoria_id": 8,
+      "marca": "Levi's"
+    },
+    {
+      "codigo": "DEM086",
+      "codigo_barras": "775101000086",
+      "nombre": "Zapatilla court M",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 349.91,
+      "categoria_id": 8,
+      "marca": "Zara"
+    },
+    {
+      "codigo": "DEM087",
+      "codigo_barras": "775101000087",
+      "nombre": "Zapatilla chunky L",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 374.45,
+      "categoria_id": 8,
+      "marca": "H&M"
+    },
+    {
+      "codigo": "DEM088",
+      "codigo_barras": "775101000088",
+      "nombre": "Zapatilla lifestyle XL",
+      "descripcion": "Producto demo · Zapatillas",
+      "precio": 399,
+      "categoria_id": 8,
+      "marca": "Under Armour"
+    },
+    {
+      "codigo": "DEM089",
+      "codigo_barras": "775101000089",
+      "nombre": "Gorra trucker",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 9,
+      "categoria_id": 9,
+      "marca": "Converse"
+    },
+    {
+      "codigo": "DEM090",
+      "codigo_barras": "775101000090",
+      "nombre": "Cinturón cuero",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 19.91,
+      "categoria_id": 9,
+      "marca": "Cat"
+    },
+    {
+      "codigo": "DEM091",
+      "codigo_barras": "775101000091",
+      "nombre": "Mochila 20L",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 30.82,
+      "categoria_id": 9,
+      "marca": "Dickies"
+    },
+    {
+      "codigo": "DEM092",
+      "codigo_barras": "775101000092",
+      "nombre": "Calcetines pack x3",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 41.73,
+      "categoria_id": 9,
+      "marca": "Mebsy"
+    },
+    {
+      "codigo": "DEM093",
+      "codigo_barras": "775101000093",
+      "nombre": "Bufanda knit",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 52.64,
+      "categoria_id": 9,
+      "marca": "Reebok"
+    },
+    {
+      "codigo": "DEM094",
+      "codigo_barras": "775101000094",
+      "nombre": "Guantes tactiles",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 63.55,
+      "categoria_id": 9,
+      "marca": "The North Face"
+    },
+    {
+      "codigo": "DEM095",
+      "codigo_barras": "775101000095",
+      "nombre": "Riñonera",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 74.45,
+      "categoria_id": 9,
+      "marca": "Vans"
+    },
+    {
+      "codigo": "DEM096",
+      "codigo_barras": "775101000096",
+      "nombre": "Lentes sol UV",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 85.36,
+      "categoria_id": 9,
+      "marca": "Nike"
+    },
+    {
+      "codigo": "DEM097",
+      "codigo_barras": "775101000097",
+      "nombre": "Bandana",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 96.27,
+      "categoria_id": 9,
+      "marca": "Adidas"
+    },
+    {
+      "codigo": "DEM098",
+      "codigo_barras": "775101000098",
+      "nombre": "Cartera slim",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 107.18,
+      "categoria_id": 9,
+      "marca": "Puma"
+    },
+    {
+      "codigo": "DEM099",
+      "codigo_barras": "775101000099",
+      "nombre": "Reloj deportivo",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 118.09,
+      "categoria_id": 9,
+      "marca": "Levi's"
+    },
+    {
+      "codigo": "DEM100",
+      "codigo_barras": "775101000100",
+      "nombre": "Collar cordón",
+      "descripcion": "Producto demo · Accesorios",
+      "precio": 129,
+      "categoria_id": 9,
+      "marca": "Zara"
+    }
+  ],
+  "count": 100
+}
