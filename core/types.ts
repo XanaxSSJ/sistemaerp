@@ -85,9 +85,11 @@ export interface SaleLineResult {
   igv: number
   total: number
   afectacionIgv: AfectacionIgv
+  /** Unidad de medida SUNAT (p. ej. NIU). */
+  unidad?: string
 }
 
-/** Datos para imprimir ticket térmico/HTML (evita imprimir PDF en Chromium). */
+/** Datos para imprimir ticket térmico/HTML (mismo formato que PDF SEE). */
 export interface SaleTicketPrint {
   tipoComprobante: TipoComprobante | string
   serie: string
@@ -104,7 +106,11 @@ export interface SaleTicketPrint {
   sucursalDireccion: string
   clienteNombre: string | null
   clienteDocumento: string | null
+  /** Payload QR SEE (opcional; NV no tiene). */
+  qr?: string | null
   items: Array<{
+    codigo: string
+    unidad: string
     descripcion: string
     cantidad: number
     precioUnitario: number

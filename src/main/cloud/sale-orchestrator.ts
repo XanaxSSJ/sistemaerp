@@ -55,6 +55,14 @@ type CloudSaleResponse = {
   } | null
 }
 
+function docTipoLabel(tipo: string): string {
+  const t = String(tipo)
+  if (t === '1' || t === '01') return 'DNI'
+  if (t === '6' || t === '06') return 'RUC'
+  if (t === '4' || t === '04') return 'C.E.'
+  return `DOC ${t}`
+}
+
 function buildTicketPrint(sale: CloudSaleResponse): SaleTicketPrint {
   return {
     tipoComprobante: sale.tipoComprobante,
@@ -72,9 +80,12 @@ function buildTicketPrint(sale: CloudSaleResponse): SaleTicketPrint {
     sucursalDireccion: sale.sucursal.direccion,
     clienteNombre: sale.cliente?.nombre ?? null,
     clienteDocumento: sale.cliente
-      ? `${sale.cliente.tipoDocumento} ${sale.cliente.numeroDocumento}`
+      ? `${docTipoLabel(sale.cliente.tipoDocumento)} ${sale.cliente.numeroDocumento}`
       : null,
+    qr: sale.see?.qr ?? null,
     items: sale.items.map((i) => ({
+      codigo: i.codigo,
+      unidad: i.unidad || 'NIU',
       descripcion: i.descripcion,
       cantidad: i.cantidad,
       precioUnitario: i.precioUnitario,

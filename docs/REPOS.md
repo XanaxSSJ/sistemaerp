@@ -3,14 +3,15 @@
 | Repo | Visibilidad | Contenido | Deploy |
 |------|-------------|-----------|--------|
 | [`XanaxSSJ/sistemaerp`](https://github.com/XanaxSSJ/sistemaerp) | **Público** | Desktop Electron | GitHub Releases |
-| [`XanaxSSJ/api-sistemaerp`](https://github.com/XanaxSSJ/api-sistemaerp) | **Privado** | API Fastify + migraciones | Koyeb |
+| [`XanaxSSJ/api-sistemaerp`](https://github.com/XanaxSSJ/api-sistemaerp) | **Privado** | API Fastify + migraciones + compose | **Oracle Cloud VM** |
+| `api-sunaterp` | **Privado** | Greenter SEE (sidecar PHP) | Mismo VPS (compose) |
 
-## Koyeb
+## Producción (Oracle Cloud)
 
-Conectar **solo** `api-sistemaerp`. Así un push del desktop no redeploya la API.
+API + Greenter en una VM con Docker Compose + Caddy.  
+Guía: `api-sistemaerp/docs/DEPLOY-OCI.md`.
 
-- Dockerfile: `Dockerfile` (raíz del repo API)
-- Context: `.`
+SEE **no** funciona en un PaaS que solo corra el Dockerfile Node sin sidecar ni volúmenes.
 
 ## Desarrollo en dos carpetas
 

@@ -3,6 +3,7 @@ import { writeFile, unlink } from 'node:fs/promises'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import type { SaleTicketPrint } from '../../core/types'
+import { amountInWordsPen } from './amount-in-words'
 
 function escapeHtml(value: string): string {
   return value
@@ -12,35 +13,63 @@ function escapeHtml(value: string): string {
     .replace(/"/g, '&quot;')
 }
 
-function formatPen(n: number): string {
-  return new Intl.NumberFormat('es-PE', {
-    style: 'currency',
-    currency: 'PEN'
-  }).format(n)
+function money(n: number): string {
+  return `S/ ${n.toFixed(2)}`
 }
 
 function pad(n: number): string {
   return String(n).padStart(8, '0')
 }
 
+function up(value: string): string {
+  return value.trim().toUpperCase()
+}
+
 function tipoLabel(tipo: string): string {
-  if (tipo === '01') return 'FACTURA ELECTRÓNICA'
-  if (tipo === '03') return 'BOLETA ELECTRÓNICA'
+  if (tipo === '01') return 'FACTURA ELECTRONICA'
+  if (tipo === '03') return 'BOLETA ELECTRONICA'
   return 'NOTA DE VENTA'
+}
+
+function pagoLabel(metodo: string): string {
+  return `${up(metodo || 'EFECTIVO')} (CONTADO)`
+}
+
+function labeled(label: string, value: string): string {
+  return `<div class="row"><span class="lbl">${escapeHtml(label)}:</span> ${escapeHtml(value)}</div>`
 }
 
 function buildTicketHtml(ticket: SaleTicketPrint): string {
   const esNv = ticket.tipoComprobante === 'NV'
-  const fecha = (ticket.createdAt || '').slice(0, 19).replace('T', ' ')
+  const fecha = up((ticket.createdAt || '').slice(0, 19).replace('T', ' '))
+  const clienteNombre = up(ticket.clienteNombre || 'CLIENTES VARIOS')
+  const pago = pagoLabel(ticket.metodoPago)
+
   const itemsHtml = ticket.items
-    .map(
-      (item) => `
-      <div class="line">
-        <div>${escapeHtml(String(item.cantidad))} x ${escapeHtml(item.descripcion)}</div>
-        <div class="right">${escapeHtml(formatPen(item.precioUnitario))} → ${escapeHtml(formatPen(item.total))}</div>
-      </div>`
-    )
+    .map((item) => {
+      const um = up(item.unidad || 'NIU')
+      const sku = up(item.codigo || '')
+      return `
+      <tr>
+        <td class="cant">${escapeHtml(String(item.cantidad))}</td>
+        <td class="desc">
+          ${escapeHtml(up(item.descripcion))}<br/>
+          <span class="meta">UM: ${escapeHtml(um)}${sku ? ` &nbsp; COD: ${escapeHtml(sku)}` : ''}</span>
+        </td>
+        <td class="num">${escapeHtml(money(item.precioUnitario))}</td>
+        <td class="num">${escapeHtml(money(item.total))}</td>
+      </tr>`
+    })
     .join('')
+
+  const qrSection =
+    !esNv && ticket.qr?.startsWith('data:image')
+      ? `<div class="qr"><img src="${ticket.qr.replace(/"/g, '')}" width="120" height="120" alt="QR" /></div>`
+      : ''
+
+  const foot = esNv
+    ? 'Documento interno — no válido para SUNAT<br/>MebsyCore'
+    : 'Representación impresa del comprobante electrónico<br/>MebsyCore — SEE del contribuyente'
 
   return `<!doctype html>
 <html>
@@ -48,64 +77,88 @@ function buildTicketHtml(ticket: SaleTicketPrint): string {
   <meta charset="utf-8" />
   <title>Ticket ${escapeHtml(ticket.serie)}-${pad(ticket.correlativo)}</title>
   <style>
-    @page {
-      size: 80mm auto;
-      margin: 4mm;
-    }
+    @page { size: 80mm auto; margin: 3mm; }
     * { box-sizing: border-box; }
     html, body {
-      margin: 0;
-      padding: 0;
-      width: 72mm;
-      background: #fff;
-      color: #000;
-      font: 11px/1.35 Arial, Helvetica, sans-serif;
+      margin: 0; padding: 0; width: 74mm;
+      background: #fff; color: #111;
+      font: 10px/1.35 Helvetica, Arial, sans-serif;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
-    .wrap { padding: 2mm; width: 72mm; }
+    .wrap { padding: 2mm; width: 74mm; }
     .c { text-align: center; }
     .b { font-weight: 700; }
-    .muted { font-size: 10px; }
-    .sep { margin: 6px 0; border-top: 1px dashed #000; }
-    .line { margin: 4px 0; }
-    .right { text-align: right; }
-    .tot { font-size: 13px; font-weight: 700; margin-top: 4px; }
-    .foot { margin-top: 8px; font-size: 9px; text-align: center; }
+    .muted { font-size: 9px; color: #333; }
+    .sep { margin: 6px 0; border-top: 1px solid #222; }
+    .row { margin: 1px 0; word-break: break-word; }
+    .lbl { font-weight: 700; }
+    table.items { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    table.items th {
+      font-size: 8px; font-weight: 700; text-align: left;
+      padding: 0 0 3px; border: 0;
+    }
+    table.items th.num, table.items td.num { text-align: right; }
+    table.items td { vertical-align: top; padding: 2px 0 4px; font-size: 9px; }
+    table.items td.cant { width: 12%; }
+    table.items td.desc { width: 46%; }
+    table.items td.num { width: 21%; }
+    .meta { font-size: 8px; color: #333; }
+    .totales { width: 100%; margin-top: 2px; }
+    .totales .line {
+      display: flex; justify-content: space-between; gap: 8px; margin: 2px 0;
+    }
+    .totales .total { font-weight: 700; font-size: 11px; }
+    .foot { margin-top: 8px; font-size: 8px; text-align: center; color: #333; }
+    .qr { margin-top: 8px; text-align: center; }
+    .qr img { display: inline-block; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="c b">${escapeHtml(ticket.empresaNombre || ticket.empresaRazonSocial)}</div>
+    <div class="c b" style="font-size:12px">${escapeHtml(ticket.empresaNombre || ticket.empresaRazonSocial)}</div>
     <div class="c muted">${escapeHtml(ticket.empresaRazonSocial)}</div>
     <div class="c">RUC: ${escapeHtml(ticket.empresaRuc)}</div>
     <div class="c">${escapeHtml(ticket.sucursalNombre)}</div>
     <div class="c muted">${escapeHtml(ticket.sucursalDireccion)}</div>
-    <div class="sep"></div>
+    <div style="height:6px"></div>
     <div class="c b">${escapeHtml(tipoLabel(String(ticket.tipoComprobante)))}</div>
-    <div class="c b">${escapeHtml(ticket.serie)}-${pad(ticket.correlativo)}</div>
-    <div class="sep"></div>
-    <div>Fecha: ${escapeHtml(fecha)}</div>
-    <div>Cliente: ${escapeHtml(ticket.clienteNombre || 'CLIENTES VARIOS')}</div>
+    <div class="c b">${escapeHtml(up(ticket.serie))}-${pad(ticket.correlativo)}</div>
+    <div style="height:6px"></div>
+    ${labeled('CLIENTE', clienteNombre)}
     ${
-      ticket.clienteDocumento && !esNv
-        ? `<div>Doc: ${escapeHtml(ticket.clienteDocumento)}</div>`
+      ticket.clienteDocumento
+        ? labeled('DOC', up(ticket.clienteDocumento))
         : ''
     }
+    ${labeled('FECHA', fecha)}
+    ${labeled('MONEDA', 'PEN')}
+    ${labeled('FORMA DE PAGO', pago)}
     <div class="sep"></div>
-    ${itemsHtml}
+    <table class="items">
+      <thead>
+        <tr>
+          <th>CANT.</th>
+          <th>DESCRIPCION</th>
+          <th class="num">P/U</th>
+          <th class="num">TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${itemsHtml}
+      </tbody>
+    </table>
     <div class="sep"></div>
-    <div class="right">Op. gravada: ${escapeHtml(formatPen(ticket.subtotal))}</div>
-    <div class="right">IGV: ${escapeHtml(formatPen(ticket.igv))}</div>
-    <div class="right tot">TOTAL: ${escapeHtml(formatPen(ticket.total))}</div>
-    <div>Pago: ${escapeHtml(ticket.metodoPago)}</div>
-    <div class="foot">
-      ${
-        esNv
-          ? 'Documento interno — no válido para SUNAT'
-          : 'Representación impresa del comprobante electrónico'
-      }<br/>MebsyCore
+    <div class="totales">
+      <div class="line"><span>GRAVADA</span><span>${escapeHtml(money(ticket.subtotal))}</span></div>
+      <div class="line"><span>IGV</span><span>${escapeHtml(money(ticket.igv))}</span></div>
+      <div class="line total"><span>TOTAL</span><span>${escapeHtml(money(ticket.total))}</span></div>
     </div>
+    <div class="sep"></div>
+    ${labeled('IMPORTE EN LETRAS', amountInWordsPen(ticket.total))}
+    ${labeled('FORMAS DE PAGO', pago)}
+    <div class="foot">${foot}</div>
+    ${qrSection}
   </div>
 </body>
 </html>`
@@ -153,7 +206,8 @@ export async function printTicketHtml(
     return { ok: false }
   }
 
-  const html = buildTicketHtml(ticket)
+  const withQr = await enrichTicketQr(ticket)
+  const html = buildTicketHtml(withQr)
   const win = new BrowserWindow({
     show: true,
     width: 360,
@@ -167,7 +221,6 @@ export async function printTicketHtml(
     await win.loadURL(
       `data:text/html;charset=utf-8,${encodeURIComponent(html)}`
     )
-    // Delay fijo tras loadURL (evita carrera con did-finish-load)
     await new Promise((r) => setTimeout(r, 150))
     return await runPrintDialog(win)
   } catch (err) {
@@ -175,6 +228,25 @@ export async function printTicketHtml(
     return { ok: false }
   } finally {
     if (!win.isDestroyed()) win.destroy()
+  }
+}
+
+/** Si hay payload QR texto, lo convierte a data URL PNG. */
+async function enrichTicketQr(
+  ticket: SaleTicketPrint
+): Promise<SaleTicketPrint> {
+  const raw = ticket.qr?.trim()
+  if (!raw || raw.startsWith('data:image')) return ticket
+  try {
+    const QRCode = (await import('qrcode')).default
+    const dataUrl = await QRCode.toDataURL(raw, {
+      margin: 1,
+      width: 160,
+      errorCorrectionLevel: 'M'
+    })
+    return { ...ticket, qr: dataUrl }
+  } catch {
+    return { ...ticket, qr: null }
   }
 }
 
