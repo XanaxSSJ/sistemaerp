@@ -1,6 +1,6 @@
 {
   "name": "mebsycore",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MebsyCore — ERP / POS desktop multi-sucursal con facturación electrónica SUNAT",
   "main": "./out/main/index.js",
   "author": "MebsyCore",
@@ -95,7 +95,7 @@
       "target": [
         "nsis"
       ],
-      "signAndEditExecutable": false
+      "signAndEditExecutable": true
     },
     "nsis": {
       "oneClick": false,

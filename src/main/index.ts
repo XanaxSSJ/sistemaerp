@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, shell } from 'electron'
+import { app, BrowserWindow, dialog, Menu, shell } from 'electron'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { setupAutoUpdater } from './auto-update'
@@ -49,6 +49,7 @@ function createWindow(): void {
     minHeight: 700,
     show: false,
     title: 'MebsyCore',
+    autoHideMenuBar: true,
     ...(icon ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -76,6 +77,7 @@ function createWindow(): void {
 
 app.whenReady().then(async () => {
   loadRootEnv()
+  Menu.setApplicationMenu(null)
 
   const apiUrl = resolveApiUrl()
   const api = new ApiClient(apiUrl)
