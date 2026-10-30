@@ -66,18 +66,21 @@
   "build": {
     "appId": "com.mebsystore.pos",
     "productName": "MebsyStore",
+    "copyright": "Copyright © MebsyStore",
     "directories": {
       "output": "release"
     },
     "files": [
       "out/**/*"
     ],
+    "artifactName": "${productName}-Setup-${version}.${ext}",
     "publish": [
       {
         "provider": "github",
         "owner": "XanaxSSJ",
         "repo": "sistemaerp",
-        "releaseType": "release"
+        "releaseType": "release",
+        "vPrefixedTagName": true
       }
     ],
     "win": {
@@ -88,7 +91,9 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "MebsyStore",
+      "uninstallDisplayName": "MebsyStore"
     }
   }
 }
