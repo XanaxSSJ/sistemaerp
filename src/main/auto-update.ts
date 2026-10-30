@@ -7,7 +7,7 @@ import { autoUpdater } from 'electron-updater'
  */
 export function setupAutoUpdater(): void {
   if (!app.isPackaged) {
-    console.log('[MebsyStore] Auto-update desactivado (modo desarrollo)')
+    console.log('[MebsyCore] Auto-update desactivado (modo desarrollo)')
     return
   }
 
@@ -15,34 +15,34 @@ export function setupAutoUpdater(): void {
   autoUpdater.autoInstallOnAppQuit = true
 
   autoUpdater.on('checking-for-update', () => {
-    console.log('[MebsyStore] Buscando actualizaciones…')
+    console.log('[MebsyCore] Buscando actualizaciones…')
   })
 
   autoUpdater.on('update-available', (info) => {
-    console.log(`[MebsyStore] Actualización disponible: ${info.version}`)
+    console.log(`[MebsyCore] Actualización disponible: ${info.version}`)
   })
 
   autoUpdater.on('update-not-available', () => {
-    console.log('[MebsyStore] La app está al día')
+    console.log('[MebsyCore] La app está al día')
   })
 
   autoUpdater.on('error', (err) => {
-    console.error('[MebsyStore] Error auto-update:', err)
+    console.error('[MebsyCore] Error auto-update:', err)
   })
 
   autoUpdater.on('download-progress', (p) => {
     console.log(
-      `[MebsyStore] Descarga update: ${p.percent.toFixed(1)}% (${Math.round(p.bytesPerSecond / 1024)} KB/s)`
+      `[MebsyCore] Descarga update: ${p.percent.toFixed(1)}% (${Math.round(p.bytesPerSecond / 1024)} KB/s)`
     )
   })
 
   autoUpdater.on('update-downloaded', (info) => {
-    console.log(`[MebsyStore] Update ${info.version} descargada`)
+    console.log(`[MebsyCore] Update ${info.version} descargada`)
     void dialog
       .showMessageBox({
         type: 'info',
         title: 'Actualización lista',
-        message: `MebsyStore ${info.version} está lista para instalar.`,
+        message: `MebsyCore ${info.version} está lista para instalar.`,
         detail:
           'Se aplicará al reiniciar la aplicación. ¿Querés reiniciar ahora?',
         buttons: ['Reiniciar ahora', 'Más tarde'],
@@ -59,7 +59,7 @@ export function setupAutoUpdater(): void {
   // Delay breve: no competir con el primer paint / health check
   setTimeout(() => {
     void autoUpdater.checkForUpdates().catch((err) => {
-      console.error('[MebsyStore] checkForUpdates falló:', err)
+      console.error('[MebsyCore] checkForUpdates falló:', err)
     })
   }, 8_000)
 }
@@ -68,6 +68,6 @@ export function setupAutoUpdater(): void {
 export function checkForUpdatesNow(): void {
   if (!app.isPackaged) return
   void autoUpdater.checkForUpdates().catch((err) => {
-    console.error('[MebsyStore] checkForUpdatesNow falló:', err)
+    console.error('[MebsyCore] checkForUpdatesNow falló:', err)
   })
 }

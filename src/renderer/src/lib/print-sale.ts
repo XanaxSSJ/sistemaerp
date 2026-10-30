@@ -15,7 +15,7 @@ export async function printSaleTicket(sale: SaleResult): Promise<void> {
       const result = await window.mebsy.invoices.printPdf(nubefactPdf)
       if (!result.ok && !result.canceled) {
         console.error(
-          '[MebsyStore] No se pudo imprimir el PDF Nubefact (sin fallback local)'
+          '[MebsyCore] No se pudo imprimir el PDF Nubefact (sin fallback local)'
         )
       }
       return
@@ -24,22 +24,22 @@ export async function printSaleTicket(sale: SaleResult): Promise<void> {
     const tipo = String(sale.ticket?.tipoComprobante ?? '')
     if (tipo === '01' || tipo === '03') {
       console.error(
-        '[MebsyStore] CPE sin URL de PDF Nubefact; no se imprime ticket local'
+        '[MebsyCore] CPE sin URL de PDF Nubefact; no se imprime ticket local'
       )
       return
     }
 
     // NV (y solo NV): ticket HTML
     if (!sale.ticket) {
-      console.error('[MebsyStore] Venta sin datos de ticket para imprimir')
+      console.error('[MebsyCore] Venta sin datos de ticket para imprimir')
       return
     }
 
     const result = await window.mebsy.invoices.printTicket(sale.ticket)
     if (!result.ok && !result.canceled) {
-      console.error('[MebsyStore] Impresión de ticket HTML no completada')
+      console.error('[MebsyCore] Impresión de ticket HTML no completada')
     }
   } catch (err) {
-    console.error('[MebsyStore] No se pudo imprimir el ticket:', err)
+    console.error('[MebsyCore] No se pudo imprimir el ticket:', err)
   }
 }

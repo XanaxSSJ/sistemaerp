@@ -88,7 +88,7 @@ export async function downloadInventoryTemplate(): Promise<void> {
   ])
   const book = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(book, sheet, 'Ajuste')
-  XLSX.writeFile(book, 'plantilla-ajuste-inventario-mebsystore.xlsx')
+  XLSX.writeFile(book, 'plantilla-ajuste-inventario-MebsyCore.xlsx')
 }
 
 export async function parseInventoryImportFile(

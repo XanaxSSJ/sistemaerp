@@ -1,4 +1,4 @@
-# MebsyStore — Arquitectura API multi-sucursal
+# MebsyCore — Arquitectura API multi-sucursal
 
 ## Objetivo
 
@@ -9,7 +9,7 @@ Stock y catálogo con **una sola fuente de verdad** (Postgres). El desktop Elect
 | Tema | Elección |
 |------|----------|
 | Backend | **Node.js + Fastify** (`api/`) con casos de uso propios |
-| BD central | **Supabase Postgres** (proyecto MebsyStoreDesktop) |
+| BD central | **Supabase Postgres** (proyecto MebsyCoreDesktop) |
 | Clientes | Desktop Electron; futura app móvil admin |
 | Auth | JWT HS256 de acceso (`JWT_EXPIRES_IN`, p. ej. 8h). Sin refresh token aún |
 | Sync | Cloud + SSE in-process (`sale.created`, `stock.updated`, …) |
@@ -22,7 +22,7 @@ Stock y catálogo con **una sola fuente de verdad** (Postgres). El desktop Elect
 ```mermaid
 flowchart TB
   subgraph clients [Clientes]
-    Desktop[MebsyStore_Desktop]
+    Desktop[MebsyCore_Desktop]
     Mobile[App_movil_futura]
   end
 

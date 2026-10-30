@@ -75,7 +75,7 @@ export function LoginPage() {
             Sistema de punto de venta
           </div>
           <h1 className="font-display mt-4 max-w-md text-5xl leading-[1.05] tracking-[-0.03em]">
-            MebsyStore
+            MebsyCore
           </h1>
           <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-white/65">
             Operación multi-sucursal, inventario centralizado y comprobantes
@@ -91,7 +91,7 @@ export function LoginPage() {
         <div className="w-full max-w-[380px] border border-[var(--ms-line)] bg-white p-7">
           <div className="mb-6 lg:hidden">
             <div className="font-display text-3xl tracking-tight">
-              MebsyStore
+              MebsyCore
             </div>
           </div>
 

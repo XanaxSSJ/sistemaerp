@@ -135,7 +135,7 @@ export async function createCloudSale(
         estado: 'error_nubefact'
       })
     } catch (err) {
-      console.error('[MebsyStore] No se pudo marcar error Nubefact:', err)
+      console.error('[MebsyCore] No se pudo marcar error Nubefact:', err)
     }
   }
 

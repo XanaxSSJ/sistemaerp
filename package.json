@@ -1,9 +1,9 @@
 {
-  "name": "mebsystore",
-  "version": "0.1.0",
-  "description": "MebsyStore — Sistema POS desktop con inventario y facturación electrónica SUNAT",
+  "name": "mebsycore",
+  "version": "0.1.1",
+  "description": "MebsyCore — ERP / POS desktop multi-sucursal con facturación electrónica SUNAT",
   "main": "./out/main/index.js",
-  "author": "MebsyStore",
+  "author": "MebsyCore",
   "license": "UNLICENSED",
   "private": true,
   "packageManager": "pnpm@11.22.0",
@@ -64,9 +64,9 @@
     ]
   },
   "build": {
-    "appId": "com.mebsystore.pos",
-    "productName": "MebsyStore",
-    "copyright": "Copyright © MebsyStore",
+    "appId": "com.mebsycore.erp",
+    "productName": "MebsyCore",
+    "copyright": "Copyright © MebsyCore",
     "directories": {
       "output": "release"
     },
@@ -92,8 +92,8 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "shortcutName": "MebsyStore",
-      "uninstallDisplayName": "MebsyStore"
+      "shortcutName": "MebsyCore",
+      "uninstallDisplayName": "MebsyCore"
     }
   }
 }

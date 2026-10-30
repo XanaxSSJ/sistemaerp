@@ -209,7 +209,7 @@ export function AppShell() {
         <div className="border-b border-white/10 px-4 py-5">
           <div className="font-display text-[26px] leading-none tracking-[-0.02em]">
             Mebsy
-            <span className="text-[var(--ms-mint)]">Store</span>
+            <span className="text-[var(--ms-mint)]">Core</span>
           </div>
 
           <div className="relative mt-3" ref={branchMenuRef}>

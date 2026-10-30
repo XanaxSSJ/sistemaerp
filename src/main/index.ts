@@ -37,7 +37,7 @@ function createWindow(): void {
     minWidth: 1100,
     minHeight: 700,
     show: false,
-    title: 'MebsyStore',
+    title: 'MebsyCore',
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       contextIsolation: true,
@@ -77,15 +77,15 @@ app.whenReady().then(async () => {
   void api
     .health()
     .then(() => {
-      console.log(`[MebsyStore] Cloud OK → ${apiUrl}`)
+      console.log(`[MebsyCore] Cloud OK → ${apiUrl}`)
     })
     .catch((err) => {
-      console.error('[MebsyStore] API no disponible:', err)
+      console.error('[MebsyCore] API no disponible:', err)
       const hint = app.isPackaged
         ? 'Verificá que la API esté en línea y que el instalador se generó con la URL correcta (.env.production).'
         : 'Inicia la API (`pnpm dev:api`) o configurá MEBSY_API_URL en .env'
       dialog.showErrorBox(
-        'MebsyStore — API requerida',
+        'MebsyCore — API requerida',
         `No se pudo conectar a la API cloud:\n${apiUrl}\n\n${hint}`
       )
     })

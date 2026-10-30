@@ -104,7 +104,7 @@ function buildTicketHtml(ticket: SaleTicketPrint): string {
         esNv
           ? 'Documento interno — no válido para SUNAT'
           : 'Representación impresa del comprobante electrónico'
-      }<br/>MebsyStore
+      }<br/>MebsyCore
     </div>
   </div>
 </body>
@@ -149,7 +149,7 @@ export async function printTicketHtml(
   ticket: SaleTicketPrint
 ): Promise<{ ok: boolean; canceled?: boolean }> {
   if (!ticket?.serie) {
-    console.error('[MebsyStore] Ticket HTML sin serie')
+    console.error('[MebsyCore] Ticket HTML sin serie')
     return { ok: false }
   }
 
@@ -171,7 +171,7 @@ export async function printTicketHtml(
     await new Promise((r) => setTimeout(r, 150))
     return await runPrintDialog(win)
   } catch (err) {
-    console.error('[MebsyStore] Error al imprimir ticket HTML:', err)
+    console.error('[MebsyCore] Error al imprimir ticket HTML:', err)
     return { ok: false }
   } finally {
     if (!win.isDestroyed()) win.destroy()
@@ -228,7 +228,7 @@ export async function printPdfFromUrl(
 
     return await runPrintDialog(win)
   } catch (err) {
-    console.error('[MebsyStore] Error al imprimir PDF Nubefact:', err)
+    console.error('[MebsyCore] Error al imprimir PDF Nubefact:', err)
     return { ok: false }
   } finally {
     if (!win.isDestroyed()) win.destroy()

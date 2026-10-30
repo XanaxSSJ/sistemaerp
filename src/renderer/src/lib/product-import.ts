@@ -54,7 +54,7 @@ export async function downloadProductTemplate(): Promise<void> {
   const sheet = XLSX.utils.aoa_to_sheet([HEADERS as unknown as string[], example])
   const book = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(book, sheet, 'Productos')
-  XLSX.writeFile(book, 'plantilla-productos-mebsystore.xlsx')
+  XLSX.writeFile(book, 'plantilla-productos-MebsyCore.xlsx')
 }
 
 export async function parseProductImportFile(file: File): Promise<ImportRow[]> {

@@ -23,7 +23,7 @@ function parseArgs(argv) {
     sucursal: false,
     ruc: '20123456789',
     razon: 'Mi Empresa SAC',
-    comercial: 'MebsyStore',
+    comercial: 'MebsyCore',
     direccion: 'Av. Ejemplo 123',
     sucursalCodigo: 'S01',
     sucursalNombre: 'Sede Principal'
@@ -66,7 +66,7 @@ function sqlLiteral(value) {
 
 function buildSql(opts, passwordHash) {
   const parts = []
-  parts.push('-- MebsyStore · bootstrap admin (generado por scripts/create-admin.mjs)')
+  parts.push('-- MebsyCore · bootstrap admin (generado por scripts/create-admin.mjs)')
   parts.push('-- Pegar en Supabase → SQL Editor\n')
 
   if (opts.empresa) {

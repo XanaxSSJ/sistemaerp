@@ -35,7 +35,7 @@ pnpm dist:publish
 
 Eso sube a https://github.com/XanaxSSJ/sistemaerp/releases :
 
-- `MebsyStore-Setup-0.1.1.exe`
+- `MebsyCore-Setup-0.1.1.exe`
 - `latest.yml` (lo usa `electron-updater`)
 - tag `v0.1.1`
 

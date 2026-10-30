@@ -56,7 +56,7 @@ export function SettingsPage() {
 
   return (
     <div>
-      <PageHeader title="Empresa" subtitle="Datos fiscales MebsyStore" />
+      <PageHeader title="Empresa" subtitle="Datos fiscales MebsyCore" />
       <div className="mb-3 space-y-2">
         {error ? <Alert>{error}</Alert> : null}
         {msg ? <Alert tone="ok">{msg}</Alert> : null}

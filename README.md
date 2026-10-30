@@ -1,6 +1,6 @@
-# sistemaerp (MebsyStore Desktop)
+# sistemaerp (MebsyCore Desktop)
 
-Cliente **desktop** del POS MebsyStore (Electron + React). La API vive en un repo **privado** aparte: [`XanaxSSJ/api-sistemaerp`](https://github.com/XanaxSSJ/api-sistemaerp).
+Cliente **desktop** del POS MebsyCore (Electron + React). La API vive en un repo **privado** aparte: [`XanaxSSJ/api-sistemaerp`](https://github.com/XanaxSSJ/api-sistemaerp).
 
 | | |
 |---|---|

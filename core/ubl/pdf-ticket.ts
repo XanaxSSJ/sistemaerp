@@ -97,7 +97,7 @@ export async function writeTicketPdf(input: PdfTicketInput): Promise<void> {
       align: 'center'
     }
   )
-  doc.text('MebsyStore — documento generado localmente', { align: 'center' })
+  doc.text('MebsyCore — documento generado localmente', { align: 'center' })
 
   doc.end()
   await once(stream, 'finish')
