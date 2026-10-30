@@ -68,10 +68,17 @@
     "productName": "MebsyCore",
     "copyright": "Copyright © MebsyCore",
     "directories": {
-      "output": "release"
+      "output": "release",
+      "buildResources": "build"
     },
     "files": [
       "out/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "build/icon.ico",
+        "to": "icon.ico"
+      }
     ],
     "artifactName": "${productName}-Setup-${version}.${ext}",
     "publish": [
@@ -84,6 +91,7 @@
       }
     ],
     "win": {
+      "icon": "build/icon.ico",
       "target": [
         "nsis"
       ],
@@ -93,7 +101,9 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "shortcutName": "MebsyCore",
-      "uninstallDisplayName": "MebsyCore"
+      "uninstallDisplayName": "MebsyCore",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico"
     }
   }
 }

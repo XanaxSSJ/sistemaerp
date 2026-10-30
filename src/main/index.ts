@@ -30,7 +30,18 @@ function loadRootEnv() {
 
 let mainWindow: BrowserWindow | null = null
 
+function resolveAppIcon(): string | undefined {
+  const candidates = [
+    join(process.resourcesPath, 'icon.ico'),
+    join(process.cwd(), 'build', 'icon.ico'),
+    join(process.cwd(), 'mebsycore.ico'),
+    join(__dirname, '../../build/icon.ico')
+  ]
+  return candidates.find((p) => existsSync(p))
+}
+
 function createWindow(): void {
+  const icon = resolveAppIcon()
   mainWindow = new BrowserWindow({
     width: 1360,
     height: 860,
@@ -38,6 +49,7 @@ function createWindow(): void {
     minHeight: 700,
     show: false,
     title: 'MebsyCore',
+    ...(icon ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       contextIsolation: true,
